@@ -179,6 +179,87 @@ Check the following log files for error details:
 - `aligned/*_hisat2.log` - Alignment problems
 - `quantification/*_featurecounts.log` - Counting errors
 
+
+
+## **Complete Dengue-Specific CDR3 Analysis Pipeline**
+# dengue_specific_cdr3_analysis.py
+
+## **What This Pipeline Does:**
+
+### **1. Extracts ALL CDR3 Sequences:**
+- **Amino acid sequences** (`aaSeqCDR3`)
+- **Nucleotide sequences** (`nSeqCDR3`)
+- **Gene assignments** (V, J genes)
+- **Read counts and frequencies**
+- **Productivity information**
+
+### **2. Identifies Dengue-Specific Sequences:**
+- **Sequences found ONLY in dengue patients** (not in controls)
+- **Public clones** shared across multiple dengue patients
+- **Severity-enriched sequences** (specific to shock/hemorrhagic/classical)
+
+### **3. Creates Comprehensive Database:**
+```
+dengue_cdr3_database/
+├── all_cdr3_sequences.csv          # All sequences with metadata
+├── dengue_specific_cdr3.csv        # Dengue-specific sequences only
+├── public_clones.csv               # Clones shared across patients
+├── sequence_enrichment.csv         # Enrichment by severity
+├── sequence_clusters.csv           # Clusters of similar sequences
+├── conserved_motifs.csv            # Conserved amino acid patterns
+├── all_productive_cdr3.fasta       # FASTA for BLAST
+├── dengue_specific_cdr3.fasta      # FASTA of dengue-specific sequences
+├── cdr3_nucleotide.fasta           # Nucleotide sequences
+├── dengue_cdr3_analysis_report.txt # Summary report
+└── cdr3_analysis_summary.png       # Visualization
+```
+
+### **4. Key Analyses Performed:**
+
+**A. Public Clone Analysis:**
+- Finds sequences shared across multiple dengue patients
+- Potential "public" immune responses to dengue
+
+**B. Severity Enrichment:**
+- Identifies sequences specific to severe vs mild dengue
+- Finds biomarkers of disease severity
+
+**C. Sequence Clustering:**
+- Groups similar CDR3 sequences
+- Identifies convergent immune responses
+
+**D. Motif Analysis:**
+- Finds conserved amino acid patterns
+- Potential antigen-binding motifs
+
+### **5. Output Files Ready for Further Analysis:**
+
+**For BLAST searches:**
+```bash
+# Search against viral databases
+blastp -query dengue_specific_cdr3.fasta -db nr -out dengue_blast_results.txt
+
+# Search against IEDB (Immune Epitope Database)
+```
+
+**For Structural Analysis:**
+- FASTA files can be used for homology modeling
+- Identify potential dengue epitope binding
+
+**For Validation Experiments:**
+- Top public clones can be synthesized for tetramer staining
+- Potential neutralizing antibody candidates
+
+## **How to Run:**
+
+```bash
+python dengue_specific_cdr3_analysis.py
+```
+
+This will process all 24 samples and generate a complete database of potentially dengue-specific BCR and TCR sequences, ready for downstream validation.
+
+
+
 ## Citation
 
 If you use this pipeline in your research, please cite the relevant tools:
